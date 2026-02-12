@@ -45,6 +45,11 @@ const Valentine = () => {
                 <div className="question-screen">
                     <h1 className="love-question">Do You Love Me? 💖</h1>
 
+                    <p className="love-subtext">
+                        My heart beats only for you 💞✨
+                        You are my today and all of my tomorrows 💕
+                    </p>
+
                     <div className="btn-group">
                         <button className="yes-btn" onClick={handleYes}>
                             Yes 💕
@@ -116,6 +121,19 @@ const Valentine = () => {
                     </div>
                 </div>
             )}
+
+            <div className="sparkles">
+                {[...Array(20)].map((_, i) => (
+                    <span
+                        key={i}
+                        style={{
+                            left: Math.random() * 100 + "%",
+                            animationDelay: Math.random() * 5 + "s"
+                        }}
+                    />
+                ))}
+            </div>
+
 
             {/* Background Music */}
             <audio ref={audioRef} src={Song} loop />
