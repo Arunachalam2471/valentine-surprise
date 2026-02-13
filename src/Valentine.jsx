@@ -80,7 +80,7 @@ const Valentine = () => {
 
                     <div className="celebration-card">
                         <h1 className="modern-text">
-                            💖 From This Moment… It’s Always Us 💖
+                            💞 This Is Where Our Forever Begins 💞
                         </h1>
                         <h2 className="modern-count">{countdown}</h2>
                     </div>
