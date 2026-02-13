@@ -23,9 +23,6 @@ const Valentine = () => {
         setAnswered(true);
         setShowCelebration(true);
 
-        if (audioRef.current) {
-            audioRef.current.play();
-        }
     };
 
     // Countdown Logic
@@ -42,9 +39,16 @@ const Valentine = () => {
                 setShowCelebration(false);
                 setLoveAccepted(true);
                 setShowContent(true);
+
+                // 🎵 PLAY SONG HERE AFTER COUNTDOWN
+                if (audioRef.current) {
+                    audioRef.current.play();
+                }
+
             }, 800);
         }
     }, [showCelebration, countdown]);
+
 
     const handleNo = () => {
         setShowMessage(true);
@@ -167,7 +171,7 @@ const Valentine = () => {
                 </div>
             )}
 
-            <audio ref={audioRef} src={Song} loop />
+            <audio ref={audioRef} src={Song} loop preload="auto" />
         </>
     );
 };
