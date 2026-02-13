@@ -540,6 +540,7 @@ body {
         align-items: center;
         position: relative;
         overflow: hidden;
+        border-radius: 20px;
     }
 
     /* Soft animated background glow */
@@ -568,13 +569,13 @@ body {
     .celebration-card {
         position: relative;
         padding: 40px 60px;
-        border-radius: 20px;
         background: rgba(255, 255, 255, 0.08);
         backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.2);
         text-align: center;
         color: white;
         animation: zoomIn 1s ease forwards;
+        border-radius: 20px;
     }
 
     @keyframes zoomIn {
@@ -591,8 +592,8 @@ body {
 
     /* Text */
     .modern-text {
-        font-size: 36px;
-        margin-bottom: 20px;
+        font-size: 25px;
+        margin-bottom: 10px;
         animation: glowText 2s infinite alternate;
     }
 
