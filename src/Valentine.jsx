@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./style.css";
 import Six from "../src/assets/6.jpeg";
 import Seven from "../src/assets/7.jpeg";
@@ -9,30 +9,42 @@ import Song from "../src/assets/song.mp3";
 
 const Valentine = () => {
     const audioRef = useRef(null);
+
     const [answered, setAnswered] = useState(false);
     const [loveAccepted, setLoveAccepted] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
     const [showContent, setShowContent] = useState(false);
-    const [animateUp, setAnimateUp] = useState(false);
 
+    // NEW STATES
+    const [showCelebration, setShowCelebration] = useState(false);
+    const [countdown, setCountdown] = useState(5);
 
     const handleYes = () => {
         setAnswered(true);
-        setLoveAccepted(true);
+        setShowCelebration(true);
 
         if (audioRef.current) {
             audioRef.current.play();
         }
-
-        // First move wrapper smoothly
-        setAnimateUp(true);
-
-        // Then show content after wrapper animation completes
-        setTimeout(() => {
-            setShowContent(true);
-        }, 1000); // match CSS transition time
     };
 
+    // Countdown Logic
+    useEffect(() => {
+        if (showCelebration && countdown > 0) {
+            const timer = setTimeout(() => {
+                setCountdown((prev) => prev - 1);
+            }, 1000);
+            return () => clearTimeout(timer);
+        }
+
+        if (countdown === 0 && showCelebration) {
+            setTimeout(() => {
+                setShowCelebration(false);
+                setLoveAccepted(true);
+                setShowContent(true);
+            }, 800);
+        }
+    }, [showCelebration, countdown]);
 
     const handleNo = () => {
         setShowMessage(true);
@@ -61,6 +73,26 @@ const Valentine = () => {
                 </div>
             )}
 
+            {/* CELEBRATION SCREEN */}
+            {showCelebration && (
+                <div className="modern-celebration">
+                    <div className="glow-bg"></div>
+
+                    <div className="celebration-card">
+                        <h1 className="modern-text">
+                            💖 From This Moment… It’s Always Us 💖
+                        </h1>
+                        <h2 className="modern-count">{countdown}</h2>
+                    </div>
+
+                    <div className="light-particles">
+                        {Array.from({ length: 30 }).map((_, i) => (
+                            <span key={i}></span>
+                        ))}
+                    </div>
+                </div>
+            )}
+
             {/* LOVE ACCEPTED SCREEN */}
             {loveAccepted && (
                 <>
@@ -85,23 +117,36 @@ const Valentine = () => {
                         <img src={Ten} alt="" />
                     </div>
 
-                    {/* Love Message (Delayed Fade In) */}
+                    {/* Love Message */}
                     {showContent && (
-                        <div className={`love-container ${showContent ? "show" : ""}`}>
+                        <div className="love-container show">
                             <div className="love-card">
                                 <h2>My Forever Valentine 💞</h2>
 
                                 <p>
                                     From the moment you entered my life, everything became more
-                                    beautiful 🌸 <br />
-                                    <br />
-                                    Your smile is my peace, your love is my strength, and your
-                                    presence is my happiness. 💖 <br />
-                                    <br />
-                                    I promise to stand by your side, today, tomorrow, and forever.
-                                    You are my heart, my world, my everything ❤️
-                                </p>
+                                    beautiful 🌸✨ <br /><br />
 
+                                    You didn’t just bring love into my world…
+                                    you brought light, peace, and a reason to smile every single day 💞 <br /><br />
+
+                                    Your smile is my comfort, your voice is my favorite sound,
+                                    and your presence is my safest place 💖 <br /><br />
+
+                                    I don’t just love you…
+                                    I cherish you, I respect you, and I choose you — today, tomorrow,
+                                    and for the rest of my life ❤️ <br /><br />
+
+                                    Believe me, no matter what happens,
+                                    I will always stand beside you, protect you, support you,
+                                    and take care of you with all my heart 🤍 <br /><br />
+
+                                    You are not just my love…
+                                    You are my forever, my home, my everything 💍✨
+                                </p>
+                                <h2 className="couple-name">
+                                    💖 Aishu ❤️ Arun 💖
+                                </h2>
                                 <div className="hearts">💖 💕 💗 💘 💞</div>
                             </div>
                         </div>
@@ -122,20 +167,6 @@ const Valentine = () => {
                 </div>
             )}
 
-            <div className="sparkles">
-                {[...Array(20)].map((_, i) => (
-                    <span
-                        key={i}
-                        style={{
-                            left: Math.random() * 100 + "%",
-                            animationDelay: Math.random() * 5 + "s"
-                        }}
-                    />
-                ))}
-            </div>
-
-
-            {/* Background Music */}
             <audio ref={audioRef} src={Song} loop />
         </>
     );
